@@ -1,6 +1,10 @@
 package pkg003.count.word.occurrences.in.a.text.tile;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyListener;
 import javax.swing.*;
 
 /**
@@ -23,9 +27,15 @@ public class Main extends JFrame
     private JPanel outcomePanel = new JPanel();
     private JPanel controlPanel = new JPanel();
     
+    private int counter = 0;
+    
+    private CustomLabel countingResultStatement = new CustomLabel("The phrase you are looking for occured " + counter + " times in bellow document.");
+    
     private CustomButton uploadFileButton = new CustomButton("Upload File");
     private CustomButton countWordOccurance = new CustomButton("Count Word Occurance");
     private CustomTextField wordToLookFor = new CustomTextField();
+    
+    
     
     public Main()
     {
@@ -35,6 +45,7 @@ public class Main extends JFrame
             mainPanel.setLayout(new BorderLayout());
             outcomePanel.setBorder(BorderFactory.createBevelBorder(0));
             outcomePanel.setPreferredSize(new Dimension(this.getWidth(), cubit / 2));
+            outcomePanel.add(countingResultStatement);
             mainPanel.add(outcomePanel, BorderLayout.NORTH);
             scrollTextArea.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()));
             mainPanel.add(scrollTextArea, BorderLayout.CENTER);
@@ -66,6 +77,7 @@ class CustomTextField extends JTextField
     public CustomTextField()
     {
         super();
+        
     }
 }
 
@@ -74,7 +86,16 @@ class CustomButton extends JButton
     public CustomButton(String buttonName)
     {
         super(buttonName);
-    }
+        
+        this.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+                if (((JButton)e.getSource()).getText()== "Upload File") System.out.println("Upload File");
+                else if (((JButton)e.getSource()).getText() == "Count Word Occurance") System.out.println("Count Word Occurance");
+            }
+        });
+    }    
 }
 
 class CustomLabel extends JLabel
@@ -82,5 +103,6 @@ class CustomLabel extends JLabel
     public CustomLabel(String labelText)
     {
         super(labelText);
+        this.setFont(new Font("Arial", TOP, 20));
     }
 }
