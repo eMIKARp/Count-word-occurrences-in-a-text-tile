@@ -1,19 +1,10 @@
 package pkg003.count.word.occurrences.in.a.text.tile;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
 import javax.swing.*;
-import sun.security.util.Length;
 
 /**
  * Pro/g/ramming Challenges v 3.0
@@ -37,7 +28,7 @@ public class Main extends JFrame
     
     private static int counter = 0;
     
-    private CustomLabel countingResultStatement = new CustomLabel("The phrase you are looking for occured " + counter + " times in bellow document.");
+    private static CustomLabel countingResultStatement = new CustomLabel("The phrase you are looking for occured " + counter + " times in bellow document.");
     
     private CustomButton uploadFileButton = new CustomButton("Upload File");
     private CustomButton countWordOccurance = new CustomButton("Count Word Occurance");
@@ -83,8 +74,19 @@ public class Main extends JFrame
         counter++;
     }
     
+    public static void resetCounter()
+    {
+        counter = 0;
+    }
+    
+    public static void changeResultStatement()
+    {
+        countingResultStatement.setText("The phrase you are looking for occured " + counter + " times in bellow document.");
+    }
+    
     public static void uploadFile()
     {
+        Main.resetCounter();
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File("."));
         if (fc.showOpenDialog(fc) == JFileChooser.APPROVE_OPTION) fileToUpload = fc.getSelectedFile();
@@ -112,20 +114,21 @@ public class Main extends JFrame
         }
     }
     
-    public static void coundWordOccurance()
+    public static void countWordOccurance()
     {
+        Main.resetCounter();
         int i = -2;
         String wordToLookFor = Main.wordToLookFor.getText();
         System.out.println("Count Word Occurance");
         System.out.println("The word you are looking for is: "+wordToLookFor);
         
-        do
+        while (i != -1 && i < textArea.getText().length())
         {
             i = textArea.getText().indexOf(wordToLookFor,i+1);
             System.out.println(i);
-            Main.increaseCounter();
+            if (i != -1 && i < textArea.getText().length()) Main.increaseCounter();
         }
-        while (i != -1);
+        Main.changeResultStatement();
     }    
 }
 
@@ -154,7 +157,7 @@ class CustomButton extends JButton
                 }
                 else if (((JButton)e.getSource()).getText() == "Count Word Occurance") 
                 {
-                    Main.coundWordOccurance();
+                    Main.countWordOccurance();
                 }
             }
         });
