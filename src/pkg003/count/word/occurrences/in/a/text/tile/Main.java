@@ -5,7 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -23,8 +29,8 @@ public class Main extends JFrame
     
     private static JPanel mainPanel = new JPanel();
     private JPanel textPanel = new JPanel();
-    private JTextArea textArea = new  JTextArea();
-    private JScrollPane scrollTextArea = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    private static JTextArea textArea = new  JTextArea();
+    private static JScrollPane scrollTextArea = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     private JPanel outcomePanel = new JPanel();
     private JPanel controlPanel = new JPanel();
     
@@ -77,6 +83,27 @@ public class Main extends JFrame
         fc.setCurrentDirectory(new File("."));
         if (fc.showOpenDialog(fc) == JFileChooser.APPROVE_OPTION) fileToUpload = fc.getSelectedFile();
         System.out.println("File you choose to upload: " + fc.getSelectedFile().getPath());
+        loadFileToTextArea(fileToUpload);
+    }
+    
+    public static void loadFileToTextArea(File fileToUpload)
+    {
+        try 
+        {
+            FileReader reader = new FileReader(fileToUpload);
+            BufferedReader breader = new BufferedReader(reader);
+            textArea.read(reader, null);
+            breader.close();
+            textArea.requestFocus();
+        } 
+        catch (FileNotFoundException ex) 
+        {
+            System.out.println(ex.getMessage());
+        } 
+        catch (IOException ex) 
+        {
+            System.out.println(ex.getMessage());
+        }
     }
     
     public static void coundWordOccurance()
