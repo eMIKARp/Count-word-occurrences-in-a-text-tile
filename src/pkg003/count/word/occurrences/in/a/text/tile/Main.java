@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyListener;
+import java.io.File;
 import javax.swing.*;
 
 /**
@@ -20,7 +21,7 @@ public class Main extends JFrame
     
     private static int cubit = 100;
     
-    private JPanel mainPanel = new JPanel();
+    private static JPanel mainPanel = new JPanel();
     private JPanel textPanel = new JPanel();
     private JTextArea textArea = new  JTextArea();
     private JScrollPane scrollTextArea = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -34,7 +35,7 @@ public class Main extends JFrame
     private CustomButton uploadFileButton = new CustomButton("Upload File");
     private CustomButton countWordOccurance = new CustomButton("Count Word Occurance");
     private CustomTextField wordToLookFor = new CustomTextField();
-    
+    private static File fileToUpload;
     
     
     public Main()
@@ -70,6 +71,19 @@ public class Main extends JFrame
         new Main().setVisible(true);
     }
     
+    public static void uploadFile()
+    {
+        JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File("."));
+        if (fc.showOpenDialog(fc) == JFileChooser.APPROVE_OPTION) fileToUpload = fc.getSelectedFile();
+        System.out.println("File you choose to upload: " + fc.getSelectedFile().getPath());
+    }
+    
+    public static void coundWordOccurance()
+    {
+        System.out.println("Count Word Occurance");
+    }
+    
 }
 
 class CustomTextField extends JTextField
@@ -91,8 +105,14 @@ class CustomButton extends JButton
             @Override
             public void actionPerformed(ActionEvent e) 
             {
-                if (((JButton)e.getSource()).getText()== "Upload File") System.out.println("Upload File");
-                else if (((JButton)e.getSource()).getText() == "Count Word Occurance") System.out.println("Count Word Occurance");
+                if (((JButton)e.getSource()).getText()== "Upload File") 
+                {
+                    Main.uploadFile();
+                }
+                else if (((JButton)e.getSource()).getText() == "Count Word Occurance") 
+                {
+                    Main.coundWordOccurance();
+                }
             }
         });
     }    
