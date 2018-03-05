@@ -24,7 +24,8 @@ public class Main extends JFrame
     private JPanel controlPanel = new JPanel();
     
     private CustomButton uploadFileButton = new CustomButton("Upload File");
-    private CustomButton countWordOccurance = new CustomButton("Count Occurance");
+    private CustomButton countWordOccurance = new CustomButton("Count Word Occurance");
+    private CustomTextField wordToLookFor = new CustomTextField();
     
     public Main()
     {
@@ -40,6 +41,15 @@ public class Main extends JFrame
             controlPanel.setBorder(BorderFactory.createBevelBorder(0));
             controlPanel.setPreferredSize(new Dimension(this.getWidth(), cubit / 2));
             mainPanel.add(controlPanel, BorderLayout.SOUTH);
+            
+            uploadFileButton.setPreferredSize(new Dimension(2*cubit,cubit / 3));
+            countWordOccurance.setPreferredSize(new Dimension(2*cubit,cubit / 3));
+            wordToLookFor.setPreferredSize(new Dimension(2*cubit,cubit / 3));
+            controlPanel.add(uploadFileButton);
+            controlPanel.add(countWordOccurance);
+            controlPanel.add(wordToLookFor);
+            
+            
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -49,6 +59,14 @@ public class Main extends JFrame
         new Main().setVisible(true);
     }
     
+}
+
+class CustomTextField extends JTextField
+{
+    public CustomTextField()
+    {
+        super();
+    }
 }
 
 class CustomButton extends JButton
