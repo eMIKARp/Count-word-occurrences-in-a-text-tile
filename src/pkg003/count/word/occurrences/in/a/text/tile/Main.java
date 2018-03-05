@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import sun.security.util.Length;
 
 /**
  * Pro/g/ramming Challenges v 3.0
@@ -34,13 +35,13 @@ public class Main extends JFrame
     private JPanel outcomePanel = new JPanel();
     private JPanel controlPanel = new JPanel();
     
-    private int counter = 0;
+    private static int counter = 0;
     
     private CustomLabel countingResultStatement = new CustomLabel("The phrase you are looking for occured " + counter + " times in bellow document.");
     
     private CustomButton uploadFileButton = new CustomButton("Upload File");
     private CustomButton countWordOccurance = new CustomButton("Count Word Occurance");
-    private CustomTextField wordToLookFor = new CustomTextField();
+    private static CustomTextField wordToLookFor = new CustomTextField();
     private static File fileToUpload;
     
     
@@ -77,6 +78,11 @@ public class Main extends JFrame
         new Main().setVisible(true);
     }
     
+    public static void increaseCounter()
+    {
+        counter++;
+    }
+    
     public static void uploadFile()
     {
         JFileChooser fc = new JFileChooser();
@@ -108,9 +114,19 @@ public class Main extends JFrame
     
     public static void coundWordOccurance()
     {
+        int i = -2;
+        String wordToLookFor = Main.wordToLookFor.getText();
         System.out.println("Count Word Occurance");
-    }
-    
+        System.out.println("The word you are looking for is: "+wordToLookFor);
+        
+        do
+        {
+            i = textArea.getText().indexOf(wordToLookFor,i+1);
+            System.out.println(i);
+            Main.increaseCounter();
+        }
+        while (i != -1);
+    }    
 }
 
 class CustomTextField extends JTextField
